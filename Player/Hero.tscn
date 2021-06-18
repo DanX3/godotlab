@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/center.png" type="Texture" id=2]
+[ext_resource path="res://components/Health/Health.gd" type="Script" id=3]
+[ext_resource path="res://Player/Hero.gd" type="Script" id=4]
+[ext_resource path="res://Player/Score.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 0.0
+
+[node name="Hero" type="KinematicBody2D"]
+position = Vector2( 124.526, 126.201 )
+collision_layer = 2
+script = ExtResource( 4 )
+walk_speed = 500
+friction = 200
+gravity = 400
+jump_force = 1200
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 0, -50 )
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.4
+drag_margin_top = 0.4
+drag_margin_right = 0.4
+drag_margin_bottom = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 0.282837
+margin_top = -55.72
+margin_right = 108.283
+margin_bottom = -7.72002
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 3 )
+damage_label = ExtResource( 1 )
+scorePath = NodePath("../Score")
+
+[node name="Score" type="Node" parent="."]
+script = ExtResource( 5 )

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://components/Health/DamageLabel.gd" type="Script" id=1]
+
+[node name="Label" type="Label"]
+anchor_right = 0.179
+margin_right = -10.96
+margin_bottom = 15.0
+rect_pivot_offset = Vector2( 16, 30 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "3215"
+align = 1
+valign = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+show_time_msec = 2000.0

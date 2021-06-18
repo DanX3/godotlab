@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/GameData.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+version = "0.1.0"
+game_data = {
+"player": [ Vector2( -106, 75.2421 ), 100 ],
+"simpleEnemy": Vector2( 71.25, 85 )
+}

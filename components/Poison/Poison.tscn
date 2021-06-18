@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://components/Poison/Poison.gd" type="Script" id=1]
+
+[node name="Poison" type="Node2D"]
+script = ExtResource( 1 )
+damage = 5
+period_msec = 2000
+duration_msec = 6000

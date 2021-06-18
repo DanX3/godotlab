@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/GameSave.gd" type="Script" id=2]
+
+[node name="Control" type="Control" groups=[
+"Canvas",
+]]
+margin_right = 240.0
+margin_bottom = 160.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="."]
+margin_right = 41.0
+margin_bottom = 20.0
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Load" type="Button" parent="."]
+margin_left = 43.1523
+margin_top = 0.944946
+margin_right = 85.1523
+margin_bottom = 20.9449
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameSaver" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="pressed" from="Save" to="GameSaver" method="_on_Button_pressed"]
+[connection signal="pressed" from="Load" to="GameSaver" method="_on_Load_pressed"]
