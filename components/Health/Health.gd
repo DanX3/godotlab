@@ -28,5 +28,5 @@ func take_damage(damage: int) -> void:
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	get_parent().get_node("Label").text += "\nHP: " + str(health)
+#func _process(delta):
+#	get_parent().get_node("Label").text += "\nHP: " + str(health)

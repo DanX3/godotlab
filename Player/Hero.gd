@@ -37,7 +37,7 @@ func _physics_process(delta):
 	if is_on_floor():
 		speed.y = 1
 	
-	$Label.text = "Speed: " + str(speed) + "\nAccel: " + str(accel)# + "\nLife: " + str($Health.health)
+#	$Label.text = "Speed: " + str(speed) + "\nAccel: " + str(accel)# + "\nLife: " + str($Health.health)
 #	position += speed * delta
 
 func save(game_data: GameData):

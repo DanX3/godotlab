@@ -1,13 +1,179 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/center.png" type="Texture" id=2]
 [ext_resource path="res://components/Health/Health.gd" type="Script" id=3]
 [ext_resource path="res://Player/Hero.gd" type="Script" id=4]
 [ext_resource path="res://Player/Score.gd" type="Script" id=5]
+[ext_resource path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" type="Script" id=6]
+[ext_resource path="res://addons/imjp94.yafsm/src/states/State.gd" type="Script" id=7]
+[ext_resource path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" type="Script" id=8]
+[ext_resource path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" type="Script" id=9]
+[ext_resource path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" type="Script" id=10]
+[ext_resource path="res://Player/Attacks.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 0.0
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 628, -240 )
+}
+name = "Entry"
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 793.5, -40 )
+}
+name = "FinalAttack"
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 335, -40 )
+}
+name = "FirstAttack"
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 605, -40 )
+}
+name = "SecondAttack"
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 628, -160 )
+}
+name = "Start"
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 7 )
+__meta__ = {
+"graph_offset": Vector2( 897.656, -87.2917 )
+}
+name = "State"
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 8 )
+name = "start"
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 10 )
+from = "Entry"
+to = "Start"
+conditions = {
+"start": SubResource( 7 )
+}
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 8 )
+name = "stop"
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 10 )
+from = "FinalAttack"
+to = "Start"
+conditions = {
+"stop": SubResource( 9 )
+}
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 8 )
+name = "attack"
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 10 )
+from = "FirstAttack"
+to = "SecondAttack"
+conditions = {
+"attack": SubResource( 11 )
+}
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 8 )
+name = "stop"
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 10 )
+from = "FirstAttack"
+to = "Start"
+conditions = {
+"stop": SubResource( 13 )
+}
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 8 )
+name = "attack"
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 10 )
+from = "SecondAttack"
+to = "FinalAttack"
+conditions = {
+"attack": SubResource( 15 )
+}
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 8 )
+name = "stop"
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 10 )
+from = "SecondAttack"
+to = "Start"
+conditions = {
+"stop": SubResource( 17 )
+}
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 8 )
+name = "attack"
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 10 )
+from = "Start"
+to = "FirstAttack"
+conditions = {
+"attack": SubResource( 19 )
+}
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 6 )
+name = ""
+states = {
+"Entry": SubResource( 2 ),
+"FinalAttack": SubResource( 3 ),
+"FirstAttack": SubResource( 4 ),
+"SecondAttack": SubResource( 5 ),
+"Start": SubResource( 6 ),
+"State": SubResource( 23 )
+}
+transitions = {
+"Entry": {
+"Start": SubResource( 8 )
+},
+"FinalAttack": {
+"Start": SubResource( 10 )
+},
+"FirstAttack": {
+"SecondAttack": SubResource( 12 ),
+"Start": SubResource( 14 )
+},
+"SecondAttack": {
+"FinalAttack": SubResource( 16 ),
+"Start": SubResource( 18 )
+},
+"Start": {
+"FirstAttack": SubResource( 20 )
+}
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "Attack1"
 
 [node name="Hero" type="KinematicBody2D"]
 position = Vector2( 124.526, 126.201 )
@@ -51,3 +217,26 @@ scorePath = NodePath("../Score")
 
 [node name="Score" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="AttackFSM" type="Node" parent="."]
+script = ExtResource( 9 )
+state_machine = SubResource( 21 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack1 = SubResource( 22 )
+
+[node name="Attack" type="Node" parent="."]
+script = ExtResource( 11 )
+fsm_path = NodePath("../AttackFSM")
+animator_path = NodePath("../AnimationPlayer")
+
+[node name="ReEnablesInput" type="Timer" parent="Attack"]
+process_mode = 0
+one_shot = true
+
+[node name="StopsAttacks" type="Timer" parent="Attack"]
+process_mode = 0
+one_shot = true
+
+[connection signal="timeout" from="Attack/ReEnablesInput" to="Attack" method="_on_ReEnablesInput_timeout"]
+[connection signal="timeout" from="Attack/StopsAttacks" to="Attack" method="_on_StopsAttacks_timeout"]
