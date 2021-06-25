@@ -96,7 +96,6 @@ visible = false
 position = Vector2( 114.84, 146.413 )
 frames = SubResource( 2 )
 animation = "Slime"
-frame = 1
 playing = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

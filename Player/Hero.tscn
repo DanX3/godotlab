@@ -1,7 +1,6 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/center.png" type="Texture" id=2]
 [ext_resource path="res://components/Health/Health.gd" type="Script" id=3]
 [ext_resource path="res://Player/Hero.gd" type="Script" id=4]
 [ext_resource path="res://Player/Score.gd" type="Script" id=5]
@@ -11,9 +10,13 @@
 [ext_resource path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" type="Script" id=9]
 [ext_resource path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" type="Script" id=10]
 [ext_resource path="res://Player/Attacks.gd" type="Script" id=11]
+[ext_resource path="res://Player/WeaponManager.gd" type="Script" id=12]
+[ext_resource path="res://Pierino/Timmy.png" type="Texture" id=13]
+[ext_resource path="res://Pierino/Timmy - alt.png" type="Texture" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
-height = 0.0
+radius = 6.74124
+height = 11.9839
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 7 )
@@ -50,98 +53,98 @@ __meta__ = {
 }
 name = "Start"
 
-[sub_resource type="Resource" id=23]
+[sub_resource type="Resource" id=7]
 script = ExtResource( 7 )
 __meta__ = {
 "graph_offset": Vector2( 897.656, -87.2917 )
 }
 name = "State"
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=8]
 script = ExtResource( 8 )
 name = "start"
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=9]
 script = ExtResource( 10 )
 from = "Entry"
 to = "Start"
 conditions = {
-"start": SubResource( 7 )
+"start": SubResource( 8 )
 }
 
-[sub_resource type="Resource" id=9]
+[sub_resource type="Resource" id=10]
 script = ExtResource( 8 )
 name = "stop"
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=11]
 script = ExtResource( 10 )
 from = "FinalAttack"
 to = "Start"
 conditions = {
-"stop": SubResource( 9 )
+"stop": SubResource( 10 )
 }
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=12]
 script = ExtResource( 8 )
 name = "attack"
 
-[sub_resource type="Resource" id=12]
+[sub_resource type="Resource" id=13]
 script = ExtResource( 10 )
 from = "FirstAttack"
 to = "SecondAttack"
 conditions = {
-"attack": SubResource( 11 )
+"attack": SubResource( 12 )
 }
 
-[sub_resource type="Resource" id=13]
+[sub_resource type="Resource" id=14]
 script = ExtResource( 8 )
 name = "stop"
 
-[sub_resource type="Resource" id=14]
+[sub_resource type="Resource" id=15]
 script = ExtResource( 10 )
 from = "FirstAttack"
 to = "Start"
 conditions = {
-"stop": SubResource( 13 )
+"stop": SubResource( 14 )
 }
 
-[sub_resource type="Resource" id=15]
+[sub_resource type="Resource" id=16]
 script = ExtResource( 8 )
 name = "attack"
 
-[sub_resource type="Resource" id=16]
+[sub_resource type="Resource" id=17]
 script = ExtResource( 10 )
 from = "SecondAttack"
 to = "FinalAttack"
 conditions = {
-"attack": SubResource( 15 )
+"attack": SubResource( 16 )
 }
 
-[sub_resource type="Resource" id=17]
+[sub_resource type="Resource" id=18]
 script = ExtResource( 8 )
 name = "stop"
 
-[sub_resource type="Resource" id=18]
+[sub_resource type="Resource" id=19]
 script = ExtResource( 10 )
 from = "SecondAttack"
 to = "Start"
 conditions = {
-"stop": SubResource( 17 )
+"stop": SubResource( 18 )
 }
 
-[sub_resource type="Resource" id=19]
+[sub_resource type="Resource" id=20]
 script = ExtResource( 8 )
 name = "attack"
 
-[sub_resource type="Resource" id=20]
+[sub_resource type="Resource" id=21]
 script = ExtResource( 10 )
 from = "Start"
 to = "FirstAttack"
 conditions = {
-"attack": SubResource( 19 )
+"attack": SubResource( 20 )
 }
 
-[sub_resource type="Resource" id=21]
+[sub_resource type="Resource" id=22]
 script = ExtResource( 6 )
 name = ""
 states = {
@@ -150,42 +153,505 @@ states = {
 "FirstAttack": SubResource( 4 ),
 "SecondAttack": SubResource( 5 ),
 "Start": SubResource( 6 ),
-"State": SubResource( 23 )
+"State": SubResource( 7 )
 }
 transitions = {
 "Entry": {
-"Start": SubResource( 8 )
+"Start": SubResource( 9 )
 },
 "FinalAttack": {
-"Start": SubResource( 10 )
+"Start": SubResource( 11 )
 },
 "FirstAttack": {
-"SecondAttack": SubResource( 12 ),
-"Start": SubResource( 14 )
+"SecondAttack": SubResource( 13 ),
+"Start": SubResource( 15 )
 },
 "SecondAttack": {
-"FinalAttack": SubResource( 16 ),
-"Start": SubResource( 18 )
+"FinalAttack": SubResource( 17 ),
+"Start": SubResource( 19 )
 },
 "Start": {
-"FirstAttack": SubResource( 20 )
+"FirstAttack": SubResource( 21 )
 }
 }
 
-[sub_resource type="Animation" id=22]
-resource_name = "Attack1"
+[sub_resource type="Animation" id=23]
+
+[sub_resource type="Animation" id=25]
+resource_name = "Idle"
+loop = true
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Bottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( -98.0282, 348.711 ), Vector2( -92.1819, 366.25 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Bottom:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.00157411 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Skeleton2D/Bottom/Torso:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ Vector2( 20.2042, -160.886 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Skeleton2D/Bottom/Torso:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.00157411 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Skeleton2D/Bottom/LegL/ForelegR:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 103.082, -1.47887 ), Vector2( 103.082, -1.47887 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Skeleton2D/Bottom/LegL/ForelegR:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.00157411, 0.4 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ 0.0, 32.4631 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Skeleton2D/Bottom/LegL:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.18, 0.4 ),
+"transitions": PoolRealArray( -2, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -75.5792, 20.2043 ), Vector2( -75.5792, 20.2043 ), Vector2( -75.5792, 20.2043 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Skeleton2D/Bottom/LegL:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.00157411, 0.18, 0.4 ),
+"transitions": PoolRealArray( -2, 1, -2 ),
+"update": 0,
+"values": [ 100.011, 93.9298, 89.3219 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Skeleton2D/Bottom/Torso/Face:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 3.74152, -98.7767 ), Vector2( 7.24902, -87.0846 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Skeleton2D/Bottom/Torso/Face:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ -92.0176 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Skeleton2D/Bottom/Torso/ArmL:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ Vector2( 92.7899, -66.5993 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Skeleton2D/Bottom/Torso/ArmL:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ 66.0625, 77.9091 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Skeleton2D/Bottom/Torso/ArmR:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( -130.3, -43.3076 ), Vector2( -108.084, -16.416 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Skeleton2D/Bottom/Torso/ArmR:rotation_degrees")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0.00157413, 0.4 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ 117.568, 84.2954 ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Skeleton2D/Bottom/LegR:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 89.0486, 26.1907 ), Vector2( 89.0486, 26.1907 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Skeleton2D/Bottom/LegR:rotation_degrees")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ 100.011, 83.5641 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Skeleton2D/Bottom/LegR/ForelegR:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 103.082, -1.47887 ), Vector2( 103.082, -1.47887 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Skeleton2D/Bottom/LegR/ForelegR:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ 0.0, 31.5827 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Polygons/Face:texture")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "Run"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Bottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.100743, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -102.523, 362.195 ), Vector2( -102.523, 334.104 ), Vector2( -102.523, 371.97 ), Vector2( -102.523, 334.104 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Bottom:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Skeleton2D/Bottom/Torso:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 20.2042, -160.886 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Skeleton2D/Bottom/Torso:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Skeleton2D/Bottom/LegL/ForelegR:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 103.082, -1.47887 ), Vector2( 103.082, -1.47887 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Skeleton2D/Bottom/LegL/ForelegR:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 47.5101, 25.2 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Skeleton2D/Bottom/LegL:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.31864, 1 ),
+"update": 0,
+"values": [ Vector2( -102.478, 11.002 ), Vector2( -68.703, 6.5813 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Skeleton2D/Bottom/LegL:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 155.329, 35.6153 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Skeleton2D/Bottom/Torso/Face:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3.74152, -98.7767 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Skeleton2D/Bottom/Torso/Face:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ -100.266, -83.7802 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Skeleton2D/Bottom/Torso/ArmL:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 92.7899, -66.5993 ), Vector2( 78.1825, -47.4973 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Skeleton2D/Bottom/Torso/ArmL:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 16.3708, 130.915 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Skeleton2D/Bottom/Torso/ArmR:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.31864, 0.420448 ),
+"update": 0,
+"values": [ Vector2( -127.961, -83.0619 ), Vector2( -44.5526, -38.1951 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Skeleton2D/Bottom/Torso/ArmR:rotation_degrees")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 161.024, 27.6173 ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Skeleton2D/Bottom/LegR:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 89.7563, 4.2471 ), Vector2( 91.5981, 24.3594 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Skeleton2D/Bottom/LegR:rotation_degrees")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 4.33913, 144.173 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Skeleton2D/Bottom/LegR/ForelegR:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 103.082, -1.47887 ), Vector2( 103.082, -1.47887 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Skeleton2D/Bottom/LegR/ForelegR:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.297302, 0.31864 ),
+"update": 0,
+"values": [ 30.7718, 63.8153 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Polygons/Face:texture")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ) ]
+}
 
 [node name="Hero" type="KinematicBody2D"]
 position = Vector2( 124.526, 126.201 )
+scale = Vector2( -1, 1 )
 collision_layer = 2
 script = ExtResource( 4 )
 walk_speed = 500
 friction = 200
 gravity = 400
 jump_force = 1200
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 0, -50 )
@@ -199,6 +665,8 @@ drag_margin_bottom = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2( 1.41741, -6.92957 )
+scale = Vector2( 1.0125, 1.11653 )
 shape = SubResource( 1 )
 
 [node name="Label" type="Label" parent="."]
@@ -220,10 +688,12 @@ script = ExtResource( 5 )
 
 [node name="AttackFSM" type="Node" parent="."]
 script = ExtResource( 9 )
-state_machine = SubResource( 21 )
+state_machine = SubResource( 22 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack1 = SubResource( 22 )
+anims/Attack1 = SubResource( 23 )
+anims/Idle = SubResource( 25 )
+anims/Run = SubResource( 24 )
 
 [node name="Attack" type="Node" parent="."]
 script = ExtResource( 11 )
@@ -237,6 +707,174 @@ one_shot = true
 [node name="StopsAttacks" type="Timer" parent="Attack"]
 process_mode = 0
 one_shot = true
+
+[node name="WeaponMgr" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[node name="Polygons" type="Node2D" parent="."]
+position = Vector2( 4.72656, -14.7891 )
+scale = Vector2( 0.04, 0.04 )
+
+[node name="ForelegR" type="Polygon2D" parent="Polygons"]
+position = Vector2( -829.399, -424.062 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 756.052, 886.519, 726.422, 1020.78, 822.719, 1056.89, 899.57, 996.705, 868.089, 931.89, 827.348, 869.853 )
+uv = PoolVector2Array( 756.052, 886.519, 726.422, 1020.78, 822.719, 1056.89, 899.57, 996.705, 868.089, 931.89, 827.348, 869.853 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="LegR" type="Polygon2D" parent="Polygons"]
+position = Vector2( -920.384, -397.828 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 849, 737, 857, 865, 920, 924, 947, 862, 955, 739 )
+uv = PoolVector2Array( 849, 737, 857, 865, 920, 924, 947, 862, 955, 739 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 1, 1, 1, 1, 1 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ) ]
+
+[node name="Bottom" type="Polygon2D" parent="Polygons"]
+position = Vector2( -1201.52, -590.268 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 962, 879, 951, 989, 1107, 1029, 1258, 1011, 1270, 890, 1150, 838 )
+uv = PoolVector2Array( 962, 879, 951, 989, 1107, 1029, 1258, 1011, 1270, 890, 1150, 838 )
+bones = [ NodePath("Bottom"), PoolRealArray( 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="ForelegL" type="Polygon2D" parent="Polygons"]
+position = Vector2( -820.859, -419.522 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 606.933, 859.688, 552.031, 1002.83, 640.267, 1053.81, 703.012, 985.178, 671.639, 891.061 )
+uv = PoolVector2Array( 606.933, 859.688, 552.031, 1002.83, 640.267, 1053.81, 703.012, 985.178, 671.639, 891.061 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 1, 1, 1, 1, 1 ) ]
+
+[node name="LegL" type="Polygon2D" parent="Polygons"]
+position = Vector2( -676.859, -376.188 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 444, 705, 442, 910, 548, 897, 553, 687 )
+uv = PoolVector2Array( 444, 705, 442, 910, 548, 897, 553, 687 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="ArmL" type="Polygon2D" parent="Polygons"]
+position = Vector2( -1029.28, -434.657 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 993, 484, 973, 669, 1103, 787, 1183, 759, 1120, 534 )
+uv = PoolVector2Array( 993, 484, 973, 669, 1103, 787, 1183, 759, 1120, 534 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 1, 1, 1, 1, 1 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ) ]
+
+[node name="Torso" type="Polygon2D" parent="Polygons"]
+position = Vector2( -815.46, -513.057 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 638, 560, 576, 853, 851, 870, 844, 560 )
+uv = PoolVector2Array( 638, 560, 576, 853, 851, 870, 844, 560 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="ArmR" type="Polygon2D" parent="Polygons"]
+position = Vector2( -656.286, -458.415 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 265, 606, 247, 685, 392, 701, 597, 527, 485, 467 )
+uv = PoolVector2Array( 265, 606, 247, 685, 392, 701, 597, 527, 485, 467 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 1, 1, 1, 1, 1 ), NodePath("Bottom/Torso/Bone2D"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0 ) ]
+
+[node name="Face" type="Polygon2D" parent="Polygons"]
+position = Vector2( -1203.4, -369.456 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 830, 46, 854, 466, 1097, 507, 1511, 465, 1463, 74, 1126, 20 )
+uv = PoolVector2Array( 830, 46, 854, 466, 1097, 507, 1511, 465, 1463, 74, 1126, 20 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Face"), PoolRealArray( 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="Hairs" type="Polygon2D" parent="Polygons"]
+position = Vector2( -492.067, -512.041 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 48, 39, 8, 302, 26, 555, 323, 537, 850, 434, 835, 205, 720, 30 )
+uv = PoolVector2Array( 48, 39, 8, 302, 26, 555, 323, 537, 850, 434, 835, 205, 720, 30 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Face"), PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="Eyes" type="Polygon2D" parent="Polygons"]
+position = Vector2( -219.886, -1030.9 )
+texture = ExtResource( 13 )
+skeleton = NodePath("../../Skeleton2D")
+polygon = PoolVector2Array( 42, 797, 68, 989, 218, 1021, 371, 1015, 437, 944, 423, 785, 320, 711, 107, 772 )
+uv = PoolVector2Array( 42, 797, 68, 989, 218, 1021, 371, 1015, 437, 944, 423, 785, 320, 711, 107, 772 )
+bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Face"), PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ) ]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+position = Vector2( 4.72656, -14.7891 )
+scale = Vector2( 0.04, 0.04 )
+
+[node name="Bottom" type="Bone2D" parent="Skeleton2D"]
+position = Vector2( -102.523, 369.944 )
+rest = Transform2D( 1, 0, 0, 1, -98.0282, 348.711 )
+
+[node name="Torso" type="Bone2D" parent="Skeleton2D/Bottom"]
+position = Vector2( 20.2042, -160.886 )
+rest = Transform2D( 1, 0, 0, 1, 20.2042, -160.886 )
+
+[node name="ArmL" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
+position = Vector2( 78.767, -48.2617 )
+rotation = 2.28487
+scale = Vector2( 1, 1 )
+rest = Transform2D( 0.40574, 0.913989, -0.913989, 0.40574, 92.7899, -66.5993 )
+default_length = 150.0
+
+[node name="ArmR" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
+position = Vector2( -44.556, -38.1969 )
+rotation = 0.482059
+scale = Vector2( 1, 1 )
+rest = Transform2D( -0.886807, 0.462139, -0.462139, -0.886807, -127.961, -83.0619 )
+default_length = 150.0
+
+[node name="Face" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
+position = Vector2( 3.74152, -98.7767 )
+rotation = -1.46225
+scale = Vector2( 1, 1 )
+rest = Transform2D( -0.0352059, -0.99938, 0.99938, -0.0352059, 3.74152, -98.7767 )
+default_length = 100.0
+
+[node name="LegR" type="Bone2D" parent="Skeleton2D/Bottom"]
+position = Vector2( 91.5244, 23.5546 )
+rotation = 2.51625
+scale = Vector2( 1, 1 )
+rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, 89.0486, 26.1907 )
+default_length = 100.0
+__meta__ = {
+"_edit_bone_": true,
+"_edit_ik_": true
+}
+
+[node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegR"]
+position = Vector2( 103.082, -1.47887 )
+rotation = 1.11378
+rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
+default_length = 100.0
+__meta__ = {
+"_edit_bone_": true
+}
+
+[node name="LegL" type="Bone2D" parent="Skeleton2D/Bottom"]
+position = Vector2( -68.7044, 6.58148 )
+rotation = 0.621646
+scale = Vector2( 1, 1 )
+rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, -75.5792, 20.2043 )
+default_length = 100.0
+__meta__ = {
+"_edit_bone_": true,
+"_edit_ik_": true
+}
+
+[node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegL"]
+position = Vector2( 103.082, -1.47887 )
+rotation = 0.439831
+rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
+default_length = 100.0
+__meta__ = {
+"_edit_bone_": true
+}
 
 [connection signal="timeout" from="Attack/ReEnablesInput" to="Attack" method="_on_ReEnablesInput_timeout"]
 [connection signal="timeout" from="Attack/StopsAttacks" to="Attack" method="_on_StopsAttacks_timeout"]

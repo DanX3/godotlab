@@ -29,9 +29,17 @@ func _physics_process(delta):
 	speed.x -= delta * friction * sign(speed.x)
 	speed.x = clamp(speed.x, -max_speed.x, max_speed.x) #* step(abs(speed.x), 1.0)
 	speed.y = clamp(speed.y, -max_speed.y, max_speed.y)
-	if abs(speed.x) < 1.0:
+	if abs(speed.x) < 2.0:
+		if $AnimationPlayer.current_animation != "Idle":
+			$AnimationPlayer.play("Idle")
 		speed.x = 0
+	elif $AnimationPlayer.current_animation != "Run":
+		$AnimationPlayer.play("Run")
+		scale = Vector2(sign(speed.x), 1)
+		rotation = 0
 	instant_speed = Vector2(0, 0)
+#	if speed.x != 0:
+#		scale.x = sign(speed.x)
 	move_and_slide(speed, Vector2(0, -1))
 	
 	if is_on_floor():
