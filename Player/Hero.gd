@@ -5,7 +5,7 @@ var speed: Vector2
 onready var accel: Vector2 = Vector2(0, 20)
 var instant_speed: Vector2
 export var walk_speed: int
-var max_speed := Vector2(100, 180)
+var max_speed := Vector2(400, 600)
 export var friction: int
 export var gravity := 100
 export var jump_force := 100
@@ -29,7 +29,7 @@ func _physics_process(delta):
 	speed.x -= delta * friction * sign(speed.x)
 	speed.x = clamp(speed.x, -max_speed.x, max_speed.x) #* step(abs(speed.x), 1.0)
 	speed.y = clamp(speed.y, -max_speed.y, max_speed.y)
-	if abs(speed.x) < 2.0:
+	if abs(speed.x) < 10.0:
 		if $AnimationPlayer.current_animation != "Idle":
 			$AnimationPlayer.play("Idle")
 		speed.x = 0

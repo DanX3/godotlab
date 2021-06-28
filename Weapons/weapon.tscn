@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Weapons/weapons.png" type="Texture" id=1]
+[ext_resource path="res://Weapons/Weapon.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 53.7036
+height = 800.658
+
+[node name="Weapon" type="Area2D"]
+scale = Vector2( 0.07, 0.07 )
+collision_layer = 8
+collision_mask = 4
+script = ExtResource( 2 )
+attack_duration = 0.5
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( -5.46573, -429.225 )
+region_enabled = true
+region_rect = Rect2( 133.343, 84.2542, 278.92, 995.429 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -456.113 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="EndAttack" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="EndAttack" to="." method="_on_EndAttack_timeout"]
