@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Sprites/gBot_pieces.png" type="Texture" id=1]
 [ext_resource path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" type="Script" id=2]
@@ -7,16 +7,19 @@
 [ext_resource path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" type="Script" id=5]
 [ext_resource path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" type="Script" id=6]
 [ext_resource path="res://addons/imjp94.yafsm/src/states/State.gd" type="Script" id=7]
+[ext_resource path="res://components/Health/Health.gd" type="Script" id=8]
+[ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=9]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="RayShape2D" id=1]
+length = 135.026
 
-[sub_resource type="RayShape2D" id=2]
-length = 43.401
+[sub_resource type="CircleShape2D" id=26]
+radius = 34.1344
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 28.6387
+[sub_resource type="CircleShape2D" id=2]
+radius = 79.7939
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 length = 2.0
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -37,6 +40,35 @@ tracks/0/keys = {
 "args": [  ],
 "method": "finish_attack"
 } ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Walk"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprites:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.00138778, 1 ),
+"transitions": PoolRealArray( 0.392292, 0.392292 ),
+"update": 0,
+"values": [ Vector2( 1.7818, -13.9212 ), Vector2( 0.593933, -33.2241 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprites:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( -0.00138778, 1 ),
+"transitions": PoolRealArray( 0.420448, 0.420448 ),
+"update": 0,
+"values": [ 10.4836, -10.9799 ]
 }
 
 [sub_resource type="Resource" id=5]
@@ -188,18 +220,17 @@ transitions = {
 }
 }
 
+[sub_resource type="CircleShape2D" id=25]
+radius = 33.1682
+
 [node name="SimpleEnemy" type="KinematicBody2D"]
+position = Vector2( 0, 42.3785 )
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 3 )
-charge_distace = 30
-attack_distance = 100
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0, -16 )
-shape = SubResource( 1 )
-disabled = true
+move_speed = 50.0
+charge_distace = 50
+attack_distance = 300
 
 [node name="HitArea" type="Area2D" parent="."]
 collision_layer = 4
@@ -208,7 +239,15 @@ collision_mask = 2
 [node name="Shape" type="CollisionShape2D" parent="HitArea"]
 position = Vector2( 0, -16 )
 rotation = -1.5708
-shape = SubResource( 2 )
+shape = SubResource( 1 )
+
+[node name="DamageableArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageableArea"]
+position = Vector2( 0.706299, -15.1856 )
+shape = SubResource( 26 )
 
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 4
@@ -217,12 +256,13 @@ collision_mask = 2
 [node name="Shape" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( 0, -16 )
 rotation = 1.57079
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="Sprites" type="Node2D" parent="."]
-position = Vector2( 0, -16 )
-scale = Vector2( 0.04, 0.04 )
+position = Vector2( 1.77761, -13.9893 )
+rotation = 0.181739
+scale = Vector2( 0.16, 0.16 )
 
 [node name="Sprite" type="Sprite" parent="Sprites"]
 texture = ExtResource( 1 )
@@ -238,7 +278,8 @@ region_rect = Rect2( 485, 564, 344, 123 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack = SubResource( 4 )
+anims/Attack = SubResource( 3 )
+anims/Walk = SubResource( 4 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -19.5228
@@ -260,16 +301,28 @@ one_shot = true
 script = ExtResource( 6 )
 state_machine = SubResource( 24 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+shape = SubResource( 25 )
+disabled = true
+
 [node name="DamageArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DamageArea"]
 position = Vector2( 0, -16 )
-shape = SubResource( 1 )
+shape = SubResource( 25 )
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 8 )
+damage_label = ExtResource( 9 )
+maxHealth = 30
 
 [connection signal="body_entered" from="HitArea" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="DamageableArea" to="." method="_on_DamageableArea_body_entered"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
 [connection signal="timeout" from="RestTimer" to="." method="_on_RestTimer_timeout"]
 [connection signal="timeout" from="WalkTimer" to="." method="_on_WalkTimer_timeout"]
 [connection signal="transited" from="FSM" to="." method="_on_FSM_transited"]
 [connection signal="updated" from="FSM" to="." method="_on_FSM_updated"]
 [connection signal="body_entered" from="DamageArea" to="." method="_on_DamageArea_body_entered"]
+[connection signal="died" from="Health" to="." method="_on_Health_died"]

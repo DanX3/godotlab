@@ -7,8 +7,8 @@
 radius = 53.7036
 height = 800.658
 
-[node name="Weapon" type="Area2D"]
-scale = Vector2( 0.07, 0.07 )
+[node name="Weapon" type="KinematicBody2D"]
+scale = Vector2( 0.1, 0.1 )
 collision_layer = 8
 collision_mask = 4
 script = ExtResource( 2 )
@@ -24,8 +24,3 @@ region_rect = Rect2( 133.343, 84.2542, 278.92, 995.429 )
 position = Vector2( 0, -456.113 )
 shape = SubResource( 1 )
 disabled = true
-
-[node name="EndAttack" type="Timer" parent="."]
-one_shot = true
-
-[connection signal="timeout" from="EndAttack" to="." method="_on_EndAttack_timeout"]

@@ -46,10 +46,14 @@ func _on_FSM_transited(from, to):
 #	print(from + " => " + to)
 	match to:
 		"Resting":
+			if $AnimationPlayer.current_animation != "Walk":
+				$AnimationPlayer.play("Walk")
 			$RestTimer.wait_time = pause_duration
 			$RestTimer.start()
 		"Wandering":
 			$WalkTimer.wait_time = walk_duration
+			if $AnimationPlayer.current_animation != "Walk":
+				$AnimationPlayer.play("Walk")
 			$WalkTimer.start()
 			if randf() < 0.5:
 				walking_dir.x *= -1
@@ -110,3 +114,16 @@ func save(save: GameData):
 
 func load(save: GameData):
 	position = save.game_data['simpleEnemy']
+
+
+func _on_DamageableArea_body_entered(body):
+	if not body is Weapon:
+		return
+	
+	var weapon = body as Weapon
+	$Health.take_damage(weapon.damage)
+	print("Health %d / %d" % [$Health.health, $Health.maxHealth])
+
+
+func _on_Health_died():
+	queue_free()

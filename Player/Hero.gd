@@ -17,6 +17,9 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("jump") and is_on_floor():
 		instant_speed = Vector2(0, -jump_force)
+	
+	if event.is_action_pressed("attack_1"):
+		$AnimationPlayer.play("Attack1")
 
 func step(d: float, x: float) -> float:
 	return 0.0 if x < d else 1.0;
@@ -29,14 +32,7 @@ func _physics_process(delta):
 	speed.x -= delta * friction * sign(speed.x)
 	speed.x = clamp(speed.x, -max_speed.x, max_speed.x) #* step(abs(speed.x), 1.0)
 	speed.y = clamp(speed.y, -max_speed.y, max_speed.y)
-	if abs(speed.x) < 10.0:
-		if $AnimationPlayer.current_animation != "Idle":
-			$AnimationPlayer.play("Idle")
-		speed.x = 0
-	elif $AnimationPlayer.current_animation != "Run":
-		$AnimationPlayer.play("Run")
-		scale = Vector2(sign(speed.x), 1)
-		rotation = 0
+	animate_movement()
 	instant_speed = Vector2(0, 0)
 #	if speed.x != 0:
 #		scale.x = sign(speed.x)
@@ -47,6 +43,19 @@ func _physics_process(delta):
 	
 #	$Label.text = "Speed: " + str(speed) + "\nAccel: " + str(accel)# + "\nLife: " + str($Health.health)
 #	position += speed * delta
+
+func animate_movement():
+	if $AnimationPlayer.current_animation == "Attack1":
+		return
+		
+	if abs(speed.x) < 10.0:
+		if $AnimationPlayer.current_animation != "Idle":
+			$AnimationPlayer.play("Idle")
+		speed.x = 0
+	elif $AnimationPlayer.current_animation != "Run":
+		$AnimationPlayer.play("Run")
+		scale = Vector2(sign(speed.x), 1)
+		rotation = 0
 
 func save(game_data: GameData):
 	game_data.game_data['player'] = [position, $Health.health]
@@ -60,3 +69,7 @@ func get_health() -> Health:
 
 func get_score() -> Score:
 	return $Score as Score
+
+
+func _on_Health_damaged():
+	$Camera2D.shake()
