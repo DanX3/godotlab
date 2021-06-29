@@ -7,6 +7,7 @@ export var damage := 10
 
 func attack():
 	print('attacked')
+	
 	$Shape.disabled = false
 
 func end_attack():

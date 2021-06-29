@@ -5,7 +5,7 @@ var speed: Vector2
 onready var accel: Vector2 = Vector2(0, 20)
 var instant_speed: Vector2
 export var walk_speed: int
-var max_speed := Vector2(400, 600)
+export var max_speed : Vector2
 export var friction: int
 export var gravity := 100
 export var jump_force := 100

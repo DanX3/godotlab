@@ -5,10 +5,10 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 53.7036
-height = 800.658
+height = 807.034
 
 [node name="Weapon" type="KinematicBody2D"]
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.15, 0.15 )
 collision_layer = 8
 collision_mask = 4
 script = ExtResource( 2 )

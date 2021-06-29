@@ -3,7 +3,7 @@
 [ext_resource path="res://Sprites/terrain.png" type="Texture" id=1]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 15.962, 16, 0, 16, 0, 5.30264, 15.962, 5.30264 )
+points = PoolVector2Array( 0.0268097, 15.9082, 0, 15.7736, 0, 6.7562, 1.50728, 5.54491, 14.5829, 5.71252, 16, 6.95654, 15.9082, 15.9082 )
 
 [resource]
 0/name = "terrain.png 0"
