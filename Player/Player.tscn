@@ -3,7 +3,7 @@
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Weapons/weapon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://components/Health/Health.gd" type="Script" id=3]
-[ext_resource path="res://Player/Hero.gd" type="Script" id=4]
+[ext_resource path="res://Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Player/Score.gd" type="Script" id=5]
 [ext_resource path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" type="Script" id=6]
 [ext_resource path="res://addons/imjp94.yafsm/src/states/State.gd" type="Script" id=7]
@@ -891,9 +891,10 @@ tracks/20/keys = {
 radius = 24.0283
 height = 59.3597
 
-[node name="Hero" type="KinematicBody2D"]
-position = Vector2( 124.526, 126.201 )
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 125.469, 126.201 )
 collision_layer = 2
+collision_mask = 5
 script = ExtResource( 4 )
 walk_speed = 1200
 max_speed = Vector2( 400, 700 )
@@ -902,16 +903,19 @@ gravity = 1500
 jump_force = 2000
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -23.9729, 88.0267 )
+position = Vector2( 0, 88.027 )
 offset = Vector2( 0, -100 )
 current = true
+drag_margin_left = 0.3
 drag_margin_top = 0.5
+drag_margin_right = 0.3
 drag_margin_bottom = 0.5
 editor_draw_drag_margin = true
 script = ExtResource( 16 )
 amount = 15.0
 shake_interval = 0.05
 shake_duration = 0.3
+frequency = 100
 
 [node name="Label" type="Label" parent="."]
 margin_left = 0.282837
@@ -1048,7 +1052,6 @@ uv = PoolVector2Array( 42, 797, 68, 989, 218, 1021, 371, 1015, 437, 944, 423, 78
 bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/ArmR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/Torso/Face"), PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ), NodePath("Bottom/LegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegR/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Bottom/LegL/ForelegR"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ) ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -6.76283, 6.12736 )
 scale = Vector2( 1.0125, 1.11653 )
 shape = SubResource( 25 )

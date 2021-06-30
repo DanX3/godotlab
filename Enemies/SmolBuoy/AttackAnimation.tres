@@ -1,0 +1,25 @@
+[gd_resource type="Animation" format=2]
+
+[resource]
+resource_name = "Attack"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "go_back"
+}, {
+"args": [  ],
+"method": "first_dash"
+}, {
+"args": [  ],
+"method": "finish_attack"
+} ]
+}

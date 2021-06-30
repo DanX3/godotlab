@@ -5,6 +5,8 @@ extends Label
 # var a = 2
 # var b = "text"
 export var show_time_msec: float = 2.0
+export var speed: float = 2.0
+
 
 # Called when the node enters the scene tree for the first time.
 
@@ -20,6 +22,6 @@ func set_damage(damage: int, object: Node2D):
 	
 
 func _process(delta):
-	rect_position -= Vector2(0, 10 * delta)
+	rect_position -= Vector2(0, speed * delta)
 	if OS.get_ticks_msec() - spawn_time > show_time_msec:
 		queue_free()

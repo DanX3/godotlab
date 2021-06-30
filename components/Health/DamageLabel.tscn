@@ -4,8 +4,11 @@
 
 [node name="Label" type="Label"]
 anchor_right = 0.179
-margin_right = -10.96
-margin_bottom = 15.0
+margin_left = 1.2599
+margin_top = -0.629959
+margin_right = -9.7001
+margin_bottom = 14.37
+rect_scale = Vector2( 3, 3 )
 rect_pivot_offset = Vector2( 16, 30 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -17,3 +20,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 show_time_msec = 2000.0
+speed = 50.0

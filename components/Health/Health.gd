@@ -31,7 +31,6 @@ func take_damage(damage: int) -> void:
 #	(get_parent() as Player).get_score().reset()
 	print("Took damage: " + str(damage))
 	
-	
 	if health == 0:
 		emit_signal("died")
 	else:

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Enemies/Enemy.gd"
+}, {
 "base": "Resource",
 "class": "GameData",
 "language": "GDScript",
@@ -27,7 +32,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player/Hero.gd"
+"path": "res://Player/Player.gd"
 }, {
 "base": "Node",
 "class": "Score",
@@ -55,6 +60,7 @@ _global_script_classes=[ {
 "path": "res://Weapons/Weapon.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "GameData": "",
 "Health": "",
 "LabSingleton": "",

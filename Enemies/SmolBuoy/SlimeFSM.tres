@@ -1,0 +1,181 @@
+[gd_resource type="Resource" load_steps=28 format=2]
+
+[ext_resource path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" type="Script" id=1]
+[ext_resource path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" type="Script" id=2]
+[ext_resource path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" type="Script" id=3]
+[ext_resource path="res://addons/imjp94.yafsm/src/states/State.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 4 )
+__meta__ = {
+"graph_offset": Vector2( 763, 158 )
+}
+name = "Attacking"
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 4 )
+__meta__ = {
+"graph_offset": Vector2( 242, 18 )
+}
+name = "Entry"
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 4 )
+__meta__ = {
+"graph_offset": Vector2( 452.5, 18 )
+}
+name = "Resting"
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 4 )
+__meta__ = {
+"graph_offset": Vector2( 754, 378 )
+}
+name = "SeenPlayer"
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 4 )
+__meta__ = {
+"graph_offset": Vector2( 1034.5, 18 )
+}
+name = "Wandering"
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 3 )
+name = "finished_attacking"
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 2 )
+from = "Attacking"
+to = "SeenPlayer"
+conditions = {
+"finished_attacking": SubResource( 6 )
+}
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 3 )
+name = "start"
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 2 )
+from = "Entry"
+to = "Resting"
+conditions = {
+"start": SubResource( 8 )
+}
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 3 )
+name = "seen_player"
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 2 )
+from = "Resting"
+to = "SeenPlayer"
+conditions = {
+"seen_player": SubResource( 10 )
+}
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 3 )
+name = "finished_resting"
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 2 )
+from = "Resting"
+to = "Wandering"
+conditions = {
+"finished_resting": SubResource( 12 )
+}
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 3 )
+name = "attack"
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 2 )
+from = "Resting"
+to = "Attacking"
+conditions = {
+"attack": SubResource( 20 )
+}
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 3 )
+name = "attack"
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 2 )
+from = "SeenPlayer"
+to = "Attacking"
+conditions = {
+"attack": SubResource( 14 )
+}
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 3 )
+name = "finished_walking"
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 2 )
+from = "Wandering"
+to = "Resting"
+conditions = {
+"finished_walking": SubResource( 16 )
+}
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 3 )
+name = "seen_player"
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 2 )
+from = "Wandering"
+to = "SeenPlayer"
+conditions = {
+"seen_player": SubResource( 18 )
+}
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 3 )
+name = "attack"
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 2 )
+from = "Wandering"
+to = "Attacking"
+conditions = {
+"attack": SubResource( 22 )
+}
+
+[resource]
+script = ExtResource( 1 )
+name = ""
+states = {
+"Attacking": SubResource( 1 ),
+"Entry": SubResource( 2 ),
+"Resting": SubResource( 3 ),
+"SeenPlayer": SubResource( 4 ),
+"Wandering": SubResource( 5 )
+}
+transitions = {
+"Attacking": {
+"SeenPlayer": SubResource( 7 )
+},
+"Entry": {
+"Resting": SubResource( 9 )
+},
+"Resting": {
+"Attacking": SubResource( 21 ),
+"SeenPlayer": SubResource( 11 ),
+"Wandering": SubResource( 13 )
+},
+"SeenPlayer": {
+"Attacking": SubResource( 15 )
+},
+"Wandering": {
+"Attacking": SubResource( 23 ),
+"Resting": SubResource( 17 ),
+"SeenPlayer": SubResource( 19 )
+}
+}
