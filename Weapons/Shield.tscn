@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Weapons/shield.png" type="Texture" id=1]
+[ext_resource path="res://Weapons/shield.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 159.788
+height = 284.152
+
+[node name="Shield" type="KinematicBody2D"]
+scale = Vector2( 0.15, 0.15 )
+collision_layer = 16
+collision_mask = 4
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 7.93696, 0 )
+rotation = 0.000401922
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 19.5, -10.5, 160, 219 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+disabled = true

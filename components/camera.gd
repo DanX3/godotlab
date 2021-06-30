@@ -27,16 +27,6 @@ func _make_shake_effect(delta):
 		return
 	
 	position.y = start_pos.y + (current_duration / shake_duration) * amount * sin(frequency * OS.get_ticks_msec())
-	
-#	current_interval += shake_interval
-#	var angle = fmod(randf(), 2.0 * PI)
-#	var r = shake_amount * (0.5 + 0.5 * randf())
-#	position = r * Vector2(cos(angle), sin(angle))
-##	var shakeX = (randf() * 2.0 * shake_amount) - shake_amount
-##	var shakeY = (randf() * 2.0 * shake_amount) - shake_amount
-##	position = start_pos + Vector2(shakeX, shakeY)
-	print("moved camera to %s" % str(position))
-	
 	if current_duration <= 0.0:
 		# reset camera status
 		shaking = false

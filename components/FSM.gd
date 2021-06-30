@@ -5,6 +5,7 @@ class_name FSMTolo
 var previous_state = null
 var state = null
 var states = {}
+var transitions = {}
 
 func _enter_state(new_state, old_state):
 	pass
@@ -19,6 +20,10 @@ func _get_transition(delta):
 	return null
 	
 func set_state(new_state):
+	if not transitions != null and not new_state in transitions[state]:
+		printerr('No transition from %s to %s' % [state, new_state])
+		return
+		
 	previous_state = state
 	state = new_state
 	

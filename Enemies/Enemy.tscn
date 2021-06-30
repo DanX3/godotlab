@@ -6,6 +6,8 @@
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=4]
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 17
 script = ExtResource( 1 )
 
 [node name="__ignore__" type="CollisionShape2D" parent="."]

@@ -13,7 +13,6 @@ var stop_attack := 1.5
 func _ready():
 	fsm = get_node("../AttackFSM") as StateMachinePlayer
 	animator = get_node(animator_path) as AnimationPlayer
-	fsm.set_trigger("start")
 	label = get_node("../Label") as Label
 	$StopsAttacks.wait_time = 1.5
 	$ReEnablesInput.wait_time = 1.0

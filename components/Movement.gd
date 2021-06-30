@@ -35,6 +35,8 @@ func lock():
 	locked = true
 	speed = Vector2.ZERO
 	accel = Vector2.ZERO
+	print('locked')
 
 func unlock():
 	locked = false
+	print('unlocked')

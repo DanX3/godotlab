@@ -11,7 +11,6 @@ radius = 61.131
 radius = 61.6596
 
 [node name="StupidSlime2" instance=ExtResource( 1 )]
-collision_layer = 0
 
 [node name="Movement" parent="." index="0"]
 max_speed = Vector2( 100, 700 )

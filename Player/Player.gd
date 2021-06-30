@@ -10,15 +10,14 @@ export var gravity := 100
 export var jump_force := 100
 
 func _ready():
-	(get_node("/root/Singleton") as LabSingleton).camera = $Camera2D
-	
+	pass
 	
 func _input(event):
 	if event.is_action_pressed("jump") and is_on_floor():
 		$Movement.instant_speed = Vector2(0, -jump_force)
 	
-	if event.is_action_pressed("attack_1"):
-		$AnimationPlayer.play("Attack1")
+#	if event.is_action_pressed("attack_1"):
+#		$AnimationPlayer.play("Attack1")
 
 func step(d: float, x: float) -> float:
 	return 0.0 if x < d else 1.0;
@@ -27,7 +26,7 @@ func _physics_process(delta):
 	var axisX = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	var speed = $Movement.physics_process(delta, axisX)
 	move_and_slide(speed, Vector2(0, -1))
-	animate_movement()
+#	animate_movement()
 	
 	if is_on_floor():
 		$Movement.speed.y = 1
@@ -61,3 +60,6 @@ func get_score() -> Score:
 
 func _on_Health_damaged():
 	$Camera2D.shake()
+
+func get_fsm() -> FSMTolo:
+	return $FSMTolo as FSMTolo
