@@ -67,8 +67,6 @@ frames = SubResource( 2 )
 rotation = -1.57079
 shape = SubResource( 3 )
 
-[connection signal="transited" from="FSM" to="." method="_on_FSM_transited"]
-[connection signal="updated" from="FSM" to="." method="_on_FSM_updated"]
 [connection signal="timeout" from="WalkTimer" to="." method="_on_WalkTimer_timeout"]
 [connection signal="timeout" from="RestTimer" to="." method="_on_RestTimer_timeout"]
 [connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]

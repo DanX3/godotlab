@@ -9,6 +9,7 @@ var walking_dir := Vector2.LEFT
 
 func _ready():
 	_flip_x()
+	$FSM.set_trigger("start")
 	
 func _flip_x():
 	if (walking_dir.x > 0) != ($Sprites.scale.x > 0):

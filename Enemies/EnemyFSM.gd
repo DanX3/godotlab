@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Enemy
+class_name EnemyFSM
 
 export (int) var touch_damage
 
@@ -8,7 +8,6 @@ var player : KinematicBody2D
 
 func _ready():
 	randomize()
-	$FSM.set_trigger("start")
 
 func _on_Hitbox_body_entered(body):
 	print("hit by " + body.name)
@@ -21,8 +20,3 @@ func _on_Hitbox_body_entered(body):
 
 func _on_Health_died():
 	queue_free()
-
-
-func _on_FSM_transited(from, to):
-	pass # Replace with function body.
-

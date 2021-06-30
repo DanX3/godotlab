@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Enemies/Enemy.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "EnemyFSM",
+"language": "GDScript",
+"path": "res://Enemies/EnemyFSM.gd"
+}, {
+"base": "Node2D",
+"class": "FSMTolo",
+"language": "GDScript",
+"path": "res://components/FSM.gd"
+}, {
 "base": "Resource",
 "class": "GameData",
 "language": "GDScript",
@@ -61,6 +71,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Enemy": "",
+"EnemyFSM": "",
+"FSMTolo": "",
 "GameData": "",
 "Health": "",
 "LabSingleton": "",

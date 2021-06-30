@@ -66,86 +66,86 @@ conditions = {
 
 [sub_resource type="Resource" id=10]
 script = ExtResource( 3 )
-name = "seen_player"
+name = "attack"
 
 [sub_resource type="Resource" id=11]
 script = ExtResource( 2 )
 from = "Resting"
-to = "SeenPlayer"
+to = "Attacking"
 conditions = {
-"seen_player": SubResource( 10 )
+"attack": SubResource( 10 )
 }
 
 [sub_resource type="Resource" id=12]
 script = ExtResource( 3 )
-name = "finished_resting"
+name = "seen_player"
 
 [sub_resource type="Resource" id=13]
 script = ExtResource( 2 )
 from = "Resting"
-to = "Wandering"
+to = "SeenPlayer"
 conditions = {
-"finished_resting": SubResource( 12 )
-}
-
-[sub_resource type="Resource" id=20]
-script = ExtResource( 3 )
-name = "attack"
-
-[sub_resource type="Resource" id=21]
-script = ExtResource( 2 )
-from = "Resting"
-to = "Attacking"
-conditions = {
-"attack": SubResource( 20 )
+"seen_player": SubResource( 12 )
 }
 
 [sub_resource type="Resource" id=14]
 script = ExtResource( 3 )
-name = "attack"
+name = "finished_resting"
 
 [sub_resource type="Resource" id=15]
 script = ExtResource( 2 )
-from = "SeenPlayer"
-to = "Attacking"
+from = "Resting"
+to = "Wandering"
 conditions = {
-"attack": SubResource( 14 )
+"finished_resting": SubResource( 14 )
 }
 
 [sub_resource type="Resource" id=16]
 script = ExtResource( 3 )
-name = "finished_walking"
+name = "attack"
 
 [sub_resource type="Resource" id=17]
 script = ExtResource( 2 )
-from = "Wandering"
-to = "Resting"
+from = "SeenPlayer"
+to = "Attacking"
 conditions = {
-"finished_walking": SubResource( 16 )
+"attack": SubResource( 16 )
 }
 
 [sub_resource type="Resource" id=18]
 script = ExtResource( 3 )
-name = "seen_player"
+name = "attack"
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 2 )
 from = "Wandering"
-to = "SeenPlayer"
+to = "Attacking"
 conditions = {
-"seen_player": SubResource( 18 )
+"attack": SubResource( 18 )
+}
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 3 )
+name = "finished_walking"
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 2 )
+from = "Wandering"
+to = "Resting"
+conditions = {
+"finished_walking": SubResource( 20 )
 }
 
 [sub_resource type="Resource" id=22]
 script = ExtResource( 3 )
-name = "attack"
+name = "seen_player"
 
 [sub_resource type="Resource" id=23]
 script = ExtResource( 2 )
 from = "Wandering"
-to = "Attacking"
+to = "SeenPlayer"
 conditions = {
-"attack": SubResource( 22 )
+"seen_player": SubResource( 22 )
 }
 
 [resource]
@@ -166,16 +166,16 @@ transitions = {
 "Resting": SubResource( 9 )
 },
 "Resting": {
-"Attacking": SubResource( 21 ),
-"SeenPlayer": SubResource( 11 ),
-"Wandering": SubResource( 13 )
+"Attacking": SubResource( 11 ),
+"SeenPlayer": SubResource( 13 ),
+"Wandering": SubResource( 15 )
 },
 "SeenPlayer": {
-"Attacking": SubResource( 15 )
+"Attacking": SubResource( 17 )
 },
 "Wandering": {
-"Attacking": SubResource( 23 ),
-"Resting": SubResource( 17 ),
-"SeenPlayer": SubResource( 19 )
+"Attacking": SubResource( 19 ),
+"Resting": SubResource( 21 ),
+"SeenPlayer": SubResource( 23 )
 }
 }
