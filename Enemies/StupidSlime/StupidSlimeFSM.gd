@@ -1,10 +1,9 @@
 extends FSMTolo
 
-onready var parent: KinematicBody2D = get_parent()
+onready var parent: EnemyFSM = get_parent()
 
 export var sleep_time := 1.0
 export var walk_time := 3.0
-var facing := 1
 var sleep_left := 0.0
 export var speed = 10.0
 var walk_left := 0.0
@@ -15,14 +14,14 @@ func _ready():
 	call_deferred("set_state", "sleep")
 
 func _enter_state(new_state, old_state):
-	print("entered state " + new_state)
 	$Label.text = new_state
 	match new_state:
 		'sleep':
 			sleep_left = sleep_time
+			parent.facing = 0.0
 		'walk':
 			walk_left = walk_time
-			facing = -1 if randf() < 0.5 else 1
+			parent.facing = -1.0 if randf() < 0.5 else 1.0
 
 func _exit_state(old_state, new_state):
 	pass
@@ -32,7 +31,7 @@ func _state_process(delta):
 		'sleep':
 			pass
 		'walk':
-			(parent as KinematicBody2D).move_and_slide(speed * Vector2(facing, 0))
+			parent.move_and_slide(speed * Vector2(parent.facing, 0))
 	
 func _get_transition(delta):
 	match state:

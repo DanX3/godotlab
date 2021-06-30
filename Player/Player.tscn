@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Weapons/weapon.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Pierino/Timmy - alt.png" type="Texture" id=14]
 [ext_resource path="res://Sprites/world/ground.png" type="Texture" id=15]
 [ext_resource path="res://components/camera.gd" type="Script" id=16]
+[ext_resource path="res://components/Movement.gd" type="Script" id=17]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 7 )
@@ -371,6 +372,23 @@ tracks/15/keys = {
 }, {
 "args": [  ],
 "method": "end_attack"
+} ]
+}
+tracks/16/type = "method"
+tracks/16/path = NodePath("Movement")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "lock"
+}, {
+"args": [  ],
+"method": "unlock"
 } ]
 }
 
@@ -902,6 +920,15 @@ friction = 300
 gravity = 1500
 jump_force = 2000
 
+[node name="Movement" type="Node" parent="."]
+script = ExtResource( 17 )
+walk_speed = 1200
+max_speed = Vector2( 400, 700 )
+friction = 500
+gravity = 1500
+jump_force = 2000
+bodyPath = NodePath("..")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, 88.027 )
 offset = Vector2( 0, -100 )
@@ -1065,41 +1092,41 @@ __meta__ = {
 }
 
 [node name="Bottom" type="Bone2D" parent="Skeleton2D"]
-position = Vector2( -128.301, 390.562 )
+position = Vector2( -129.575, 393.429 )
 rest = Transform2D( 1, 0, 0, 1, -98.0282, 348.711 )
 
 [node name="Torso" type="Bone2D" parent="Skeleton2D/Bottom"]
-position = Vector2( 21.0681, -161.091 )
+position = Vector2( 21.3156, -161.15 )
 rest = Transform2D( 1, 0, 0, 1, 20.2042, -160.886 )
 
 [node name="ArmL" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
-position = Vector2( 89.4152, -52.5333 )
-rotation = 0.663549
+position = Vector2( 91.603, -45.4855 )
+rotation = 1.71508
 rest = Transform2D( 0.40574, 0.913989, -0.913989, 0.40574, 92.7899, -66.5993 )
 default_length = 150.0
 
 [node name="ArmR" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
-position = Vector2( -22.1019, -53.0147 )
-rotation = 0.907443
+position = Vector2( -35.1043, -38.8675 )
+rotation = 1.83545
 rest = Transform2D( -0.886807, 0.462139, -0.462139, -0.886807, -127.961, -83.0619 )
 default_length = 150.0
 
 [node name="Position2D" type="Position2D" parent="Skeleton2D/Bottom/Torso/ArmR"]
 position = Vector2( 190.321, -23.8933 )
-rotation = 0.789547
+rotation = 1.06492
 scale = Vector2( 6.66667, 6.66667 )
 
 [node name="Rapier" parent="Skeleton2D/Bottom/Torso/ArmR/Position2D" instance=ExtResource( 2 )]
 
 [node name="Face" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
 position = Vector2( 3.74152, -98.7767 )
-rotation = -1.74409
+rotation = -1.68158
 rest = Transform2D( -0.0352059, -0.99938, 0.99938, -0.0352059, 3.74152, -98.7767 )
 default_length = 100.0
 
 [node name="LegR" type="Bone2D" parent="Skeleton2D/Bottom"]
 position = Vector2( 91.0478, 18.3502 )
-rotation = 0.843125
+rotation = 0.813042
 rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, 89.0486, 26.1907 )
 default_length = 100.0
 __meta__ = {
@@ -1109,7 +1136,7 @@ __meta__ = {
 
 [node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegR"]
 position = Vector2( 103.082, -1.47887 )
-rotation = 1.18707
+rotation = 1.26204
 rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
 default_length = 100.0
 __meta__ = {
@@ -1118,7 +1145,7 @@ __meta__ = {
 
 [node name="LegL" type="Bone2D" parent="Skeleton2D/Bottom"]
 position = Vector2( -69.4652, 6.68107 )
-rotation = 2.11959
+rotation = 2.18281
 rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, -75.5792, 20.2043 )
 default_length = 100.0
 __meta__ = {
@@ -1128,7 +1155,7 @@ __meta__ = {
 
 [node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegL"]
 position = Vector2( 103.082, -1.47887 )
-rotation = 6.7473
+rotation = 6.74534
 rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
 default_length = 100.0
 __meta__ = {

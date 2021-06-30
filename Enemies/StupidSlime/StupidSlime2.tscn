@@ -11,11 +11,15 @@ radius = 61.131
 radius = 61.6596
 
 [node name="StupidSlime2" instance=ExtResource( 1 )]
+collision_layer = 0
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="Movement" parent="." index="0"]
+max_speed = Vector2( 100, 700 )
+
+[node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )
 
-[node name="Health" parent="." index="3"]
+[node name="Health" parent="." index="4"]
 maxHealth = 30
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
@@ -26,7 +30,7 @@ position = Vector2( -0.625656, -1.19408 )
 scale = Vector2( 8, 8 )
 texture = ExtResource( 3 )
 
-[node name="FSM" parent="." index="6"]
+[node name="FSM" parent="." index="7"]
 script = ExtResource( 2 )
 speed = 50.0
 
