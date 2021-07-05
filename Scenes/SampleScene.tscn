@@ -1,13 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Sprites/world/tileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Enemies/StupidSlime/StupidSlime2.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=4]
-[ext_resource path="res://components/Spawner.gd" type="Script" id=5]
-[ext_resource path="res://components/UI/UI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://components/UI/UI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=4]
 
-[node name="Node2D" type="Node2D"]
+[node name="SampleScene" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 0, -302.723 )
@@ -17,14 +15,16 @@ cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( -65539, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -131061, 0, 0, -131060, 0, 0, -131059, 0, 0, -131058, 0, 0, -131057, 0, 0, -131056, 0, 0, -131055, 0, 0, -131054, 0, 0, -3, 0, 0, -65518, 0, 0, 65533, 0, 0, 18, 0, 0, 131069, 0, 0, 65554, 0, 0, 196605, 0, 0, 131079, 0, 0, 131080, 0, 0, 131090, 0, 0, 262141, 0, 0, 196612, 0, 0, 196613, 0, 0, 196626, 0, 0, 327677, 0, 0, 327678, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 262162, 0, 0 )
 
-[node name="Hero" parent="." instance=ExtResource( 2 )]
+[node name="Hero" parent="." instance=ExtResource( 4 )]
 position = Vector2( 821.571, -175.569 )
 walk_speed = 1800
 friction = 800
 jump_force = 2500
 uiPath = NodePath("../CanvasLayer/UI")
 
-[node name="ParallaxBackground" parent="." instance=ExtResource( 4 )]
+[node name="ParallaxBackground" parent="." instance=ExtResource( 3 )]
+offset = Vector2( 0, -350 )
+transform = Transform2D( 1, 0, 0, 1, 0, -350 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -37,19 +37,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="UI" parent="CanvasLayer" instance=ExtResource( 6 )]
-
-[node name="Enemy2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1514.96, 2.54707 )
-collision_layer = 0
-collision_mask = 1
-
-[node name="Enemy3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1052.77, 19.7581 )
-collision_layer = 0
-collision_mask = 1
-
-[node name="Spawner" type="Node2D" parent="."]
-position = Vector2( 223.426, -186.468 )
-script = ExtResource( 5 )
-spawnable = ExtResource( 3 )
+[node name="UI" parent="CanvasLayer" instance=ExtResource( 2 )]

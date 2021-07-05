@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Enemies/Enemy.gd"
 }, {
-"base": "KinematicBody2D",
-"class": "EnemyFSM",
-"language": "GDScript",
-"path": "res://Enemies/EnemyFSM.gd"
-}, {
 "base": "Node2D",
 "class": "FSMTolo",
 "language": "GDScript",
@@ -81,7 +76,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Enemy": "",
-"EnemyFSM": "",
 "FSMTolo": "",
 "GameData": "",
 "Health": "",
@@ -99,7 +93,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Lab"
-run/main_scene="res://Scenes/TestAttack.tscn"
+run/main_scene="res://Scenes/NonSampleScene.tscn"
 config/icon="res://icon.png"
 config/version="0.1.0"
 

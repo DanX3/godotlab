@@ -1,6 +1,6 @@
 extends FSMTolo
 
-onready var parent: EnemyFSM = get_parent()
+onready var parent: Enemy = get_parent()
 
 export var sleep_time := 1.0
 export var walk_time := 3.0
