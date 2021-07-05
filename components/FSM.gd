@@ -6,6 +6,7 @@ var previous_state = null
 var state = null
 var states = {}
 var transitions = {}
+onready var start_pos := position
 
 func _enter_state(new_state, old_state):
 	pass
@@ -20,6 +21,10 @@ func _get_transition(delta):
 	return null
 	
 func set_state(new_state):
+	# adds the state if not existing
+	if !states.has(new_state):
+		add_state(new_state)
+		
 	if not transitions != null and not new_state in transitions[state]:
 		printerr('No transition from %s to %s' % [state, new_state])
 		return
