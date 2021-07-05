@@ -5,12 +5,13 @@
 [ext_resource path="res://Sprites/slime/slime0000.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 61.131
+radius = 68.0008
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 61.6596
 
 [node name="StupidSlime2" instance=ExtResource( 1 )]
+touch_damage = 10
 
 [node name="Movement" parent="." index="0"]
 max_speed = Vector2( 100, 700 )

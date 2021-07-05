@@ -7,9 +7,9 @@
 [ext_resource path="res://Sprites/items.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/world/Bush.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://components/UI/UI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FSM/SimpleEnemy.tscn" type="PackedScene" id=14]
 [ext_resource path="res://components/SaveUI.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Player/ScoreBar.gd" type="Script" id=16]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -64,71 +64,20 @@ visible = false
 position = Vector2( 114.84, 146.413 )
 frames = SubResource( 2 )
 animation = "Slime"
-frame = 1
 playing = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 15 )]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -30.95
-margin_right = 84.0
-margin_bottom = 9.05
-rect_scale = Vector2( 0.75, 0.75 )
-alignment = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Health" type="ProgressBar" parent="CanvasLayer/VBoxContainer"]
-margin_top = 8.0
-margin_right = 84.0
-margin_bottom = 22.0
-rect_min_size = Vector2( 0, 14 )
-value = 34.53
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Health"]
-margin_right = 84.0
-margin_bottom = 14.0
-text = "HP"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Score" type="ProgressBar" parent="CanvasLayer/VBoxContainer"]
-margin_top = 26.0
-margin_right = 84.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 0, 14 )
-value = 34.53
-percent_visible = false
-script = ExtResource( 16 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer/Score"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-text = "Score"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="UI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 75.37, 76.5173 )
 frames = SubResource( 5 )
 animation = "Medal blinking"
+frame = 1
 playing = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -139,7 +88,6 @@ format = 1
 tile_data = PoolIntArray( 131055, -1610612736, 0, 65594, -1073741824, 0, 196591, -1610612736, 0, 131130, -1073741824, 0, 262127, -1610612736, 0, 196666, -1073741824, 0, 327663, -1610612736, 0, 262202, -1073741824, 0, 393199, 0, 0, 393200, 0, 0, 393201, 0, 0, 393202, 0, 0, 393203, 0, 0, 393204, 0, 0, 393205, 0, 0, 393206, 0, 0, 393207, 0, 0, 393208, 0, 0, 393209, 0, 0, 393210, 0, 0, 393211, 0, 0, 393212, 0, 0, 393213, 0, 0, 393214, 0, 0, 393215, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 0, 0, 327699, 0, 0, 327700, 0, 0, 327701, 0, 0, 327702, 0, 0, 327703, 0, 0, 327704, 0, 0, 327705, 0, 0, 327706, 0, 0, 327707, 0, 0, 327708, 0, 0, 327709, 0, 0, 327710, 0, 0, 327711, 0, 0, 327712, 0, 0, 327713, 0, 0, 327714, 0, 0, 327715, 0, 0, 327716, 0, 0, 327717, 0, 0, 327718, 0, 0, 327719, 0, 0, 327720, 0, 0, 327721, 0, 0, 327722, 0, 0, 327723, 0, 0, 327724, 0, 0, 327725, 0, 0, 327726, 0, 0, 327727, 0, 0, 327728, 0, 0, 327729, 0, 0, 327730, 0, 0, 327731, 0, 0, 327732, 0, 0, 327733, 0, 0, 327734, 0, 0, 327735, 0, 0, 327736, 0, 0, 327737, 0, 0, 327738, 0, 0 )
 
 [node name="Hero" parent="." groups=[
-"player",
 "save",
 ] instance=ExtResource( 3 )]
 position = Vector2( -16, 69 )

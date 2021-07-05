@@ -15,6 +15,7 @@ func _ready():
 	add_state('attack_2')
 	add_state('attack_3')
 	add_state('guard')
+	add_state('unguard')
 	call_deferred('set_state', 'idle')
 	transitions = {
 		'idle': ['walk', 'attack_1', 'guard'],
@@ -34,12 +35,15 @@ func _enter_state(new_state, old_state):
 			animator.play("Attack1")
 #			state_time_left = animator.get_animation('Attack1').length
 		'guard':
-			unguarding = false
 			animator.play("Guard")
+			$GuardDelay.start(animator.get_animation("Guard").length)
 			movement.lock()
 		'unguard':
 			animator.play_backwards('Guard')
-			unguarding = true
+			$GuardDelay.stop()
+			var shield = get_shield()
+			if shield != null:
+				shield.guard(false)
 #			state_time_left = animator.get_animation('Guard').length
 
 func _exit_state(old_state, new_state):
@@ -67,13 +71,23 @@ func _get_transition(delta):
 #
 #	match state:
 
-var unguarding = false
+func get_shield():
+	var shield_group = get_tree().get_nodes_in_group('shield')
+	if len(shield_group) == 1:
+		return shield_group[0]
+	else:
+		return null
+
 func _on_AnimationPlayer_animation_finished(anim_name):
-	print('finished ' + anim_name)
 	match anim_name:
 		'Attack1', 'attack_2', 'attack_3':
 			set_state('idle')
 		'Guard':
-			if unguarding:
+			if state == 'unguard':
 				set_state('idle')
-				unguarding = false
+
+
+func _on_GuardDelay_timeout():
+	var shield = get_shield()
+	if shield != null:
+		shield.guard(true)

@@ -69,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/imjp94.yafsm/src/StateMachinePlayer.gd"
 }, {
+"base": "Control",
+"class": "UI",
+"language": "GDScript",
+"path": "res://components/UI/UI.gd"
+}, {
 "base": "Node",
 "class": "Weapon",
 "language": "GDScript",
@@ -87,6 +92,7 @@ _global_script_class_icons={
 "StateMachine": "",
 "StateMachineFactory": "",
 "StateMachinePlayer": "",
+"UI": "",
 "Weapon": ""
 }
 
@@ -165,6 +171,7 @@ shield={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Weapon"
+2d_physics/layer_5="Shield"
 
 [physics]
 

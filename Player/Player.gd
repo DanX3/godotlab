@@ -8,9 +8,18 @@ export var max_speed : Vector2
 export var friction: int
 export var gravity := 100
 export var jump_force := 100
+export (NodePath) var uiPath
+var ui: UI
+
+onready var audio_segments := {
+	"damage1": [10.8, 0.8],
+	"damage2": [11.64, 1.0]
+}
 
 func _ready():
-	pass
+	ui = get_node(uiPath) as UI
+	ui.set_max_health(50)
+	ui.set_health(50)
 	
 func _input(event):
 	if event.is_action_pressed("jump") and is_on_floor():
@@ -58,8 +67,14 @@ func get_score() -> Score:
 	return $Score as Score
 
 
-func _on_Health_damaged():
+func _on_Health_damaged(health_left):
 	$Camera2D.shake()
+	ui.set_health(health_left)
+	var damage_segment = audio_segments['damage1' if randf() < 0.5 else 'damage2']
+	$AudioStreamPlayer2D.play_segment(damage_segment[0], damage_segment[1])
 
 func get_fsm() -> FSMTolo:
 	return $FSMTolo as FSMTolo
+	
+func get_ui() -> UI:
+	return ui

@@ -14,7 +14,7 @@ func _on_Hitbox_body_entered(body):
 	print("hit by " + body.name)
 	if body is Player:
 		(body as Player).get_health().take_damage(touch_damage)
-		pass
+		return
 		
 	if body is Weapon:
 		$Health.take_damage((body as Weapon).damage)

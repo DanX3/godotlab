@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://components/Health/DamageLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Weapons/weapon.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Player/Player.gd" type="Script" id=4]
 [ext_resource path="res://Player/Score.gd" type="Script" id=5]
 [ext_resource path="res://Player/FSMPlayer.gd" type="Script" id=6]
+[ext_resource path="res://components/RecordingPlayer/RecordingPlayer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/Pierino/Timmy.png" type="Texture" id=13]
 [ext_resource path="res://Player/Pierino/Timmy - alt.png" type="Texture" id=14]
 [ext_resource path="res://Sprites/world/ground.png" type="Texture" id=15]
@@ -13,7 +14,7 @@
 [ext_resource path="res://components/Movement.gd" type="Script" id=17]
 [ext_resource path="res://Weapons/Shield.tscn" type="PackedScene" id=18]
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=1]
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Skeleton2D/Bottom/Torso/Face:position")
@@ -230,7 +231,7 @@ tracks/16/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=2]
 resource_name = "Guard"
 length = 0.3
 step = 0.05
@@ -546,25 +547,8 @@ tracks/25/keys = {
 "update": 0,
 "values": [ -4.62268, -28.2882 ]
 }
-tracks/26/type = "method"
-tracks/26/path = NodePath("Skeleton2D/Bottom/Torso/ArmL/Position2D/Shield")
-tracks/26/interp = 1
-tracks/26/loop_wrap = true
-tracks/26/imported = false
-tracks/26/enabled = true
-tracks/26/keys = {
-"times": PoolRealArray( 0, 0.05 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [ false ],
-"method": "guard"
-}, {
-"args": [ true ],
-"method": "guard"
-} ]
-}
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=3]
 resource_name = "Idle"
 loop = true
 step = 0.02
@@ -821,7 +805,7 @@ tracks/20/keys = {
 "values": [ -5.82163, -17.8163 ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=4]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -1077,7 +1061,7 @@ tracks/20/keys = {
 "values": [ -53.4052, -4.46352, 35.4127 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=25]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 24.0283
 height = 59.3597
 
@@ -1121,6 +1105,7 @@ frequency = 100
 [node name="Health" type="Node" parent="."]
 script = ExtResource( 3 )
 damage_label = ExtResource( 1 )
+maxHealth = 50
 scorePath = NodePath("../Score")
 
 [node name="Score" type="Node" parent="."]
@@ -1144,11 +1129,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GuardDelay" type="Timer" parent="FSMTolo"]
+process_mode = 0
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack1 = SubResource( 22 )
-anims/Guard = SubResource( 26 )
-anims/Idle = SubResource( 23 )
-anims/Run = SubResource( 24 )
+anims/Attack1 = SubResource( 1 )
+anims/Guard = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/Run = SubResource( 4 )
 
 [node name="Polygons" type="Node2D" parent="."]
 position = Vector2( 4.72656, -14.7891 )
@@ -1245,7 +1234,7 @@ bones = [ NodePath("Bottom"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath(
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -6.76283, 6.12736 )
 scale = Vector2( 1.0125, 1.11653 )
-shape = SubResource( 25 )
+shape = SubResource( 5 )
 
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 position = Vector2( 4.72656, -14.7891 )
@@ -1256,7 +1245,7 @@ __meta__ = {
 }
 
 [node name="Bottom" type="Bone2D" parent="Skeleton2D"]
-position = Vector2( -52.3026, 354.375 )
+position = Vector2( -58.6022, 352.893 )
 rotation = 0.100234
 rest = Transform2D( 1, 0, 0, 1, -98.0282, 348.711 )
 
@@ -1266,29 +1255,28 @@ rest = Transform2D( 1, 0, 0, 1, 20.2042, -160.886 )
 
 [node name="ArmL" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
 position = Vector2( 92.7899, -66.5993 )
-rotation = 0.109861
-scale = Vector2( 1, 1 )
+rotation = 0.128018
 rest = Transform2D( 0.40574, 0.913989, -0.913989, 0.40574, 92.7899, -66.5993 )
 default_length = 150.0
 
 [node name="Position2D" type="Position2D" parent="Skeleton2D/Bottom/Torso/ArmL"]
 position = Vector2( 212.43, -16.2466 )
-rotation = -0.206673
+rotation = -0.193543
 
 [node name="Shield" parent="Skeleton2D/Bottom/Torso/ArmL/Position2D" instance=ExtResource( 18 )]
 position = Vector2( 14.1787, 10.6077 )
 scale = Vector2( 1, 1 )
+collision_layer = 1
 
 [node name="ArmR" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
 position = Vector2( -127.961, -83.0619 )
-rotation = 2.47997
-scale = Vector2( 1, 1 )
+rotation = 2.47225
 rest = Transform2D( -0.886807, 0.462139, -0.462139, -0.886807, -127.961, -83.0619 )
 default_length = 150.0
 
 [node name="Position2D" type="Position2D" parent="Skeleton2D/Bottom/Torso/ArmR"]
 position = Vector2( 190.321, -23.8933 )
-rotation = -0.493722
+rotation = -0.424882
 scale = Vector2( 6.66667, 6.66667 )
 
 [node name="Rapier" parent="Skeleton2D/Bottom/Torso/ArmR/Position2D" instance=ExtResource( 2 )]
@@ -1297,14 +1285,12 @@ scale = Vector2( 0.12, 0.12 )
 [node name="Face" type="Bone2D" parent="Skeleton2D/Bottom/Torso"]
 position = Vector2( 3.74152, -98.7767 )
 rotation = -1.60601
-scale = Vector2( 1, 1 )
 rest = Transform2D( -0.0352059, -0.99938, 0.99938, -0.0352059, 3.74152, -98.7767 )
 default_length = 100.0
 
 [node name="LegR" type="Bone2D" parent="Skeleton2D/Bottom"]
 position = Vector2( 89.0486, 26.1907 )
-rotation = 0.790587
-scale = Vector2( 1, 1 )
+rotation = 0.678699
 rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, 89.0486, 26.1907 )
 default_length = 100.0
 __meta__ = {
@@ -1314,7 +1300,7 @@ __meta__ = {
 
 [node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegR"]
 position = Vector2( 103.082, -1.47887 )
-rotation = 0.745018
+rotation = 0.744717
 rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
 default_length = 100.0
 __meta__ = {
@@ -1323,8 +1309,7 @@ __meta__ = {
 
 [node name="LegL" type="Bone2D" parent="Skeleton2D/Bottom"]
 position = Vector2( -75.5792, 20.2043 )
-rotation = 1.81771
-scale = Vector2( 1, 1 )
+rotation = 1.80757
 rest = Transform2D( -0.173833, 0.984775, -0.984775, -0.173833, -75.5792, 20.2043 )
 default_length = 100.0
 __meta__ = {
@@ -1334,7 +1319,7 @@ __meta__ = {
 
 [node name="ForelegR" type="Bone2D" parent="Skeleton2D/Bottom/LegL"]
 position = Vector2( 103.082, -1.47887 )
-rotation = 0.529013
+rotation = 0.43805
 rest = Transform2D( 1, 0, 0, 1, 103.082, -1.47887 )
 default_length = 100.0
 __meta__ = {
@@ -1342,9 +1327,15 @@ __meta__ = {
 }
 
 [node name="Floor" type="Sprite" parent="."]
+visible = false
 position = Vector2( -11.4117, 80.069 )
 scale = Vector2( 10, 1 )
 texture = ExtResource( 15 )
 
+[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 7 )]
+volume_db = -5.389
+pitch_scale = 1.27
+
 [connection signal="damaged" from="Health" to="." method="_on_Health_damaged"]
+[connection signal="timeout" from="FSMTolo/GuardDelay" to="FSMTolo" method="_on_GuardDelay_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="FSMTolo" method="_on_AnimationPlayer_animation_finished"]
