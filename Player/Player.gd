@@ -34,24 +34,26 @@ func step(d: float, x: float) -> float:
 func _physics_process(delta):
 	var axisX = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	var speed = $Movement.physics_process(delta, axisX)
+	if abs(speed.x) < 10.0:
+		speed.x = 0.0
 	move_and_slide(speed, Vector2(0, -1))
 #	animate_movement()
 	
 	if is_on_floor():
 		$Movement.speed.y = 1
 
-func animate_movement():
-	if $AnimationPlayer.current_animation == "Attack1":
-		return
-		
-	if abs($Movement.speed.x) < 10.0:
-		if $AnimationPlayer.current_animation != "Idle":
-			$AnimationPlayer.play("Idle")
-		$Movement.speed.x = 0
-	elif $AnimationPlayer.current_animation != "Run":
-		$AnimationPlayer.play("Run")
-		scale = Vector2(sign($Movement.speed.x), 1)
-		rotation = 0
+#func animate_movement():
+#	if $AnimationPlayer.current_animation == "Attack1":
+#		return
+#
+#	if abs($Movement.speed.x) < 10.0:
+#		if $AnimationPlayer.current_animation != "Idle":
+#			$AnimationPlayer.play("Idle")
+#		$Movement.speed.x = 0
+#	elif $AnimationPlayer.current_animation != "Run":
+#		$AnimationPlayer.play("Run")
+#		scale = Vector2(sign($Movement.speed.x), 1)
+#		rotation = 0
 
 func save(game_data: GameData):
 	game_data.game_data['player'] = [position, $Health.health]

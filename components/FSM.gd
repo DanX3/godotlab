@@ -6,7 +6,6 @@ var previous_state = null
 var state = null
 var states = {}
 var transitions = {}
-onready var start_pos := position
 
 func _enter_state(new_state, old_state):
 	pass

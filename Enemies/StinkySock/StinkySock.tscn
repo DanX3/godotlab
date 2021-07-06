@@ -1,20 +1,134 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/StinkySock/Sock.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/StinkySock/GreenRect.png" type="Texture" id=3]
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9.85722, 9.92236 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "StinkCloud"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprites/GreenRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -3.89539, -8.25603 ), Vector2( -3.89539, 5.12255 ), Vector2( -3.89539, -8.25603 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprites/GreenRect:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprites/GreenRect2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 5.03585, 1.21344 ), Vector2( 5.03585, -9.39033 ), Vector2( 5.03585, 1.21344 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprites/GreenRect2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("FSM")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_spawn_cloud"
+} ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10.0201, 9.95665 )
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 56.0404
+
 [node name="Sock" instance=ExtResource( 1 )]
+touch_damage = 8
+
+[node name="Movement" parent="." index="0"]
+walk_speed = 300
+friction = 200
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0.0991058, 0.693703 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/StinkCloud = SubResource( 2 )
+
+[node name="Health" parent="." index="4"]
+maxHealth = 50
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 0.431763, 0.628886 )
+shape = SubResource( 3 )
+
+[node name="GreenRect" type="Sprite" parent="Sprites" index="0"]
+position = Vector2( -4.5891, -3.8956 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
+
+[node name="GreenRect2" type="Sprite" parent="Sprites" index="1"]
+position = Vector2( 4.34214, 5.57387 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
 
 [node name="FSM" parent="." index="7"]
 script = ExtResource( 2 )
+max_distance = 500.0
+min_step = 200
+max_step = 400
 
-[node name="GreenRect" type="Sprite" parent="FSM" index="1"]
-position = Vector2( -0.749146, -14.2339 )
-scale = Vector2( 0.486382, 0.486382 )
-texture = ExtResource( 3 )
+[node name="Label" parent="FSM" index="0"]
+margin_top = -32.7646
+margin_bottom = -18.7646
 
-[node name="GreenRect2" type="Sprite" parent="FSM" index="2"]
-position = Vector2( 68.4227, 0 )
-scale = Vector2( 0.486382, 0.486382 )
-texture = ExtResource( 3 )
+[node name="Timer" type="Timer" parent="FSM" index="1"]
+one_shot = true
+
+[node name="PlayerDetection" type="Area2D" parent="." index="8"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection" index="0"]
+shape = SubResource( 4 )
+
+[connection signal="tween_all_completed" from="Tween" to="FSM" method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="FSM/Timer" to="FSM" method="_on_Timer_timeout"]
+[connection signal="body_entered" from="PlayerDetection" to="FSM" method="_on_PlayerDetection_body_entered"]

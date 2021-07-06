@@ -4,6 +4,7 @@ class_name Enemy
 
 export (int) var touch_damage
 
+
 var player : KinematicBody2D
 var facing := 1.0
 
@@ -25,3 +26,5 @@ func _physics_process(delta):
 
 func _on_Health_died():
 	queue_free()
+
+
