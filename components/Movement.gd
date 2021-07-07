@@ -39,4 +39,4 @@ func lock():
 	
 func unlock():
 	locked = false
-	print('locked movement')
+	print('unlocked movement')

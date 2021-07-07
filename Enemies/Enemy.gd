@@ -28,3 +28,7 @@ func _on_Health_died():
 	queue_free()
 
 
+
+
+func _on_AnimationPlayer_animation_started(anim_name):
+	print('started animation %s' % anim_name)
