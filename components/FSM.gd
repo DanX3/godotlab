@@ -7,10 +7,10 @@ var state = null
 var states = {}
 var transitions = {}
 
-func _enter_state(new_state, old_state):
+func _enter_state(new_state):
 	pass
 
-func _exit_state(old_state, new_state):
+func _exit_state(old_state):
 	pass
 
 func _state_process(delta):
@@ -32,10 +32,10 @@ func set_state(new_state):
 	state = new_state
 	
 	if previous_state != null:
-		_exit_state(previous_state, new_state)
+		_exit_state(previous_state)
 	
 	if new_state != null:
-		_enter_state(new_state, previous_state)
+		_enter_state(new_state)
 		
 func add_state(state_name):
 	states[state_name] = states.size()

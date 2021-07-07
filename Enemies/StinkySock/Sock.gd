@@ -9,10 +9,11 @@ var found_player := false
 var player : Player
 var walk_dir := Vector2(1, 0)
 onready var tween :Tween = $'../Tween'
-onready var raycast: RayCast2D = $'../RayCast2D'
 onready var space2d = get_world_2d().direct_space_state
 onready var start_pos = get_parent().position
+onready var movement = get_node('../Movement') as Movement
 var stink_cloud = preload("res://Enemies/StinkySock/StinkCloud.tscn")
+onready var parent :Node2D = get_parent()
 
 func _ready():
 	set_state('move')
@@ -21,63 +22,44 @@ func _get_target() -> Vector2:
 	if player == null:
 		return start_pos
 	else:
-		return player.position
+		return player.global_position
 
 func _get_walk_dir() -> Vector2:
-	var target_dir = Vector2(sign(_get_target().x - get_parent().position.x), 0)
-	var to_pos_chance = (_get_target().x - get_parent().position.x) / max_distance
-	target_dir.x *= 1 if randf() < to_pos_chance or to_pos_chance < 0.0 else -1
-	return target_dir
-
+	var target = _get_target()
+	if abs(target.x - parent.position.x) > max_distance:
+		print('towards target')
+		return Vector2(sign(target.x - parent.position.x), 0)
+	else:
+		print('towards random')
+		return Vector2(1.0 if randf() < 0.5 else -1.0, 0)
 
 func _move_to_target():
-	var pos = get_parent().position
-	var target = _get_walk_dir() * (min_step + randf() * (max_step - min_step))
-	var collision = space2d.intersect_ray(pos, pos + target)
-	if not collision.empty() && collision.collider.name == "TileMap":
-		target.x *= -1
-	
-	walk_dir = Vector2(sign(target.x - pos.x), 0)
-	tween.interpolate_method(self, "_move", 0.0, 1.0, 3.0, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
-#	tween.interpolate_property(get_parent(), "position", pos, pos + target, 2.0, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
+	walk_dir = _get_walk_dir()
+	$Arrow.set_dir(_get_walk_dir())
+	# warning-ignore:return_value_discarded
+	tween.interpolate_method(self, "_move", 0.0, 1.0, 2.0, Tween.TRANS_CIRC, Tween.EASE_OUT)
+	# warning-ignore:return_value_discarded
 	tween.start()
 
-onready var speed_axis := 1.0
 func _move(value):
-	speed_axis = value
-	get_parent().facing = value * walk_dir.x
-#	speed = value * walk_dir.x
-
-onready var movement = get_node('../Movement') as Movement
-func non_physics_process(delta):
-	if state in ['move', 'follow']:
-#		print('speed: %f' % speed)
-		print('speed_axis: %f' % speed_axis)
-		get_parent().facing
-#		var speed_x = movement.physics_process(delta, speed_axis * walk_dir.x)
-#		get_parent().move_and_slide(speed_x * movement.max_speed.x, Vector2(0, -1))
-		
-		var parentBody = get_parent() as KinematicBody2D
-		for i in range(parentBody.get_slide_count()):
-			var c = parentBody.get_slide_collision(i)
-			if c is Player:
-				tween.stop_all()
-				set_state('stink')
-				break
+	parent.facing = value * walk_dir.x
+	$Label.text = "facing: " + str(parent.facing)
+	$Label.text += '\nlocked: ' + str(get_node("../Movement").locked)
 
 
-func _enter_state(new_state, old_state):
+func _enter_state(new_state):
 	$Label.text = new_state
 	match new_state:
 		'move', 'follow':
 			_move_to_target()
 		'stink':
+			print('entered stink')
 			movement.lock()
 			get_node('../AnimationPlayer').play("StinkCloud")
 			$Timer.start(6.0)
 			
 
-func _state_process(delta):
+func _state_process(__):
 	match state:
 		'move':
 			pass
@@ -86,8 +68,8 @@ func _state_process(delta):
 		'stink':
 			pass
 
-func _exit_state(old_state, new_state):
-	match new_state:
+func _exit_state(old_state):
+	match old_state:
 		'move', 'follow':
 			stop_chance = 0.0
 		'stink':

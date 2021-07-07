@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/StinkySock/Sock.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/StinkySock/GreenRect.png" type="Texture" id=3]
+[ext_resource path="res://components/Arrow/Arrow.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9.85722, 9.92236 )
@@ -83,6 +84,7 @@ touch_damage = 8
 
 [node name="Movement" parent="." index="0"]
 walk_speed = 300
+max_speed = Vector2( 200, 700 )
 friction = 200
 
 [node name="CollisionShape2D" parent="." index="1"]
@@ -111,7 +113,7 @@ texture = ExtResource( 3 )
 
 [node name="FSM" parent="." index="7"]
 script = ExtResource( 2 )
-max_distance = 500.0
+max_distance = 300.0
 min_step = 200
 max_step = 400
 
@@ -121,6 +123,8 @@ margin_bottom = -18.7646
 
 [node name="Timer" type="Timer" parent="FSM" index="1"]
 one_shot = true
+
+[node name="Arrow" parent="FSM" index="2" instance=ExtResource( 4 )]
 
 [node name="PlayerDetection" type="Area2D" parent="." index="8"]
 collision_layer = 0

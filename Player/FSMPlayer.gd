@@ -24,7 +24,7 @@ func _ready():
 		'unguard': ['idle', 'walk'],
 	}
 
-func _enter_state(new_state, old_state):
+func _enter_state(new_state):
 	$Label.text = new_state
 	match new_state:
 		'idle':
@@ -46,8 +46,8 @@ func _enter_state(new_state, old_state):
 				shield.guard(false)
 #			state_time_left = animator.get_animation('Guard').length
 
-func _exit_state(old_state, new_state):
-	match new_state:
+func _exit_state(old_state):
+	match old_state:
 		'unguard':
 			movement.unlock()
 			set_state('idle')

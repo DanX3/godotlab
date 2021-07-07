@@ -21,7 +21,6 @@ func physics_process(delta: float, axisX: float) -> Vector2:
 	if locked:
 		return speed
 	
-	print('axisX: %f' % axisX)
 	axisX = clamp(axisX, -1.0, 1.0)
 	accel.x = axisX * walk_speed
 	accel.y = 1 if body.is_on_floor() else gravity
@@ -36,6 +35,8 @@ func lock():
 	locked = true
 	speed = Vector2.ZERO
 	accel = Vector2.ZERO
-
+	print('locked movement')
+	
 func unlock():
 	locked = false
+	print('locked movement')
