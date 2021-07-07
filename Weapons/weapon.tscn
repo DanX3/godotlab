@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 53.7036
-height = 807.034
+height = 1072.79
 
 [node name="Weapon" type="KinematicBody2D" groups=[
 "weapon",
@@ -23,7 +23,7 @@ region_enabled = true
 region_rect = Rect2( 133.343, 84.2542, 278.92, 995.429 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -456.113 )
+position = Vector2( 0, -542.537 )
 shape = SubResource( 1 )
 disabled = true
 

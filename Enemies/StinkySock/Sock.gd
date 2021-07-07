@@ -51,7 +51,7 @@ func _move_to_target(keep_dir: bool):
 	$Timer.start(walk_time)
 
 var stop_chance := 0.1
-export var stop_chance_increase := 0.1
+export var stop_chance_increase := 0.2
 func _on_Timer_timeout():
 	stop_chance += stop_chance_increase
 	set_state('pause')
@@ -66,17 +66,19 @@ func _process(_delta):
 	$Label.text += 'snake_dir: %f\n' % snake_dir
 	$Label.text += 'locked: ' + str(movement.locked)
 
-var just_moved := false
+var just_turned := false
 func _enter_state(new_state):
 	match new_state:
 		'move':
-			_move_to_target(just_moved)
-			just_moved = false
+			_move_to_target(just_turned)
+			just_turned = false
 		'stink':
+			snake_dir = -1.0
+			walk_dir.x = -1.0
 			movement.lock()
 			animator.play("StinkCloud")
 		'turn':
-			just_moved = true
+			just_turned = true
 			movement.lock()
 			snake_dir = walk_dir.x
 			parent.facing = snake_dir
@@ -102,7 +104,10 @@ func _on_PlayerDetection_body_entered(body):
 		player = body as Player
 	
 func _spawn_cloud():
-	owner.add_child(stink_cloud.instance())
+	var cloud = stink_cloud.instance()
+	get_tree().current_scene.add_child(cloud)
+	cloud.global_position = parent.global_position
+#	owner.add_child(stink_cloud.instance())
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
