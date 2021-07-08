@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Enemies/StinkySock/StinkCloud.gd" type="Script" id=1]
+[ext_resource path="res://Enemies/StinkySock/cloud.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 149.98
+
+[sub_resource type="Animation" id=2]
+resource_name = "StinkExpansion"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3.5 ),
+"transitions": PoolRealArray( 0.517632, 1 ),
+"update": 0,
+"values": [ 12.4565, 150.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.0731707, 0.617886, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 0.537255, 1, 1, 1, 0.415686, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 0 ), 0.0, 2.85276, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+direction = Vector3( 1, 1, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 41.95
+initial_velocity_random = 1.0
+angular_velocity = -104.21
+angular_velocity_random = 0.29
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 8.59
+angle = 180.0
+angle_random = 1.0
+scale = 0.05
+scale_random = 0.3
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+
+[node name="StinkCloud" type="Area2D"]
+scale = Vector2( 2.5, 2.5 )
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "StinkExpansion"
+anims/StinkExpansion = SubResource( 2 )
+
+[node name="StinkTimer" type="Timer" parent="."]
+
+[node name="Particles2D" type="Particles2D" parent="."]
+scale = Vector2( 1.2, 1.2 )
+lifetime = 5.0
+explosiveness = 0.86
+process_material = SubResource( 7 )
+texture = ExtResource( 2 )
+
+[connection signal="body_entered" from="." to="." method="_on_StinkCloud_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_StinkCloud_body_exited"]
+[connection signal="timeout" from="StinkTimer" to="." method="_on_StinkTimer_timeout"]
