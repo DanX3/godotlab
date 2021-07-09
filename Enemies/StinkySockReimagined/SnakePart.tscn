@@ -4,6 +4,7 @@
 
 [node name="SnakePart" type="Sprite"]
 position = Vector2( 0.176575, 0 )
+scale = Vector2( 0.15, 0.15 )
 script = ExtResource( 1 )
 y_period = 0.005
 y_amplitude = 10

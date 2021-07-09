@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Player/Score.gd"
 }, {
+"base": "Sprite",
+"class": "SnakePart",
+"language": "GDScript",
+"path": "res://Enemies/StinkySockReimagined/SnakePart.gd"
+}, {
 "base": "Resource",
 "class": "StateMachine",
 "language": "GDScript",
@@ -83,6 +88,7 @@ _global_script_class_icons={
 "Movement": "",
 "Player": "",
 "Score": "",
+"SnakePart": "",
 "StateMachine": "",
 "StateMachineFactory": "",
 "StateMachinePlayer": "",

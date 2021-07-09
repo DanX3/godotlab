@@ -5,6 +5,12 @@ export var min_step := 100
 export var max_step := 300
 export var walk_speed := 100
 export var walk_time := 2.0
+export (PackedScene) var snake_part
+export var snake_tex : Texture
+
+var body_region := Rect2(37, 466, 486, 385)
+var heel_region := Rect2(519, 504, 483, 390)
+var tail_region := Rect2(519, 21.5, 437, 436)
 
 var found_player := false
 var player : Player
@@ -20,6 +26,35 @@ var snake_dir := -1.0
 
 func _ready():
 	set_state('move')
+	call_deferred("_setup_body")
+
+func _setup_body():
+	var scene = get_tree().current_scene
+	
+	# Body 1 setup
+	var body1 = snake_part.instance() as SnakePart
+	body1.init(snake_tex, parent, body_region, PI/2)
+	scene.add_child(body1)
+	body1.position = parent.position
+	
+	# Heel setup
+	var heel = snake_part.instance() as SnakePart
+	heel.init(snake_tex, body1, heel_region, PI)
+	scene.add_child(heel)
+	heel.position = body1.position
+	
+	# Body 2 setup
+	var body2 = snake_part.instance() as SnakePart
+	body2.init(snake_tex, heel, body_region, 1.5*PI)
+	scene.add_child(body2)
+	body2.position = heel.position
+	
+	# Tail setup
+	var tail = snake_part.instance() as SnakePart
+	tail.init(snake_tex, body2, tail_region, 2*PI)
+	tail.scale *= 1.5
+	scene.add_child(tail)
+	tail.position = body2.position
 
 func _get_target() -> Vector2:
 	if player == null:
@@ -38,20 +73,15 @@ func _move_to_target(keep_dir: bool):
 	if not keep_dir:
 		walk_dir = _get_walk_dir()
 		
-	if walk_dir.x != snake_dir:
-		set_state('turn')
-		return
-		
 	$Arrow.set_dir(walk_dir)
 	parent.facing = walk_dir.x
-	if walk_dir.x > 0:
-		animator.play("WalkBackwards")
-	else:
-		animator.play("Walk")
+	if sign(parent.facing) == sign(scale.x):
+		scale.x *= -1
+	animator.play("Walk")
 	$Timer.start(walk_time)
 
 var stop_chance := 0.1
-export var stop_chance_increase := 0.2
+export var stop_chance_increase := 0.05
 func _on_Timer_timeout():
 	stop_chance += stop_chance_increase
 	set_state('pause')
@@ -77,15 +107,6 @@ func _enter_state(new_state):
 			walk_dir.x = -1.0
 			movement.lock()
 			animator.play("StinkCloud")
-		'turn':
-			just_turned = true
-			movement.lock()
-			snake_dir = walk_dir.x
-			parent.facing = snake_dir
-			if snake_dir > 0.0:
-				animator.play("Turn")
-			else:
-				animator.play_backwards("Turn")
 			
 
 func _exit_state(old_state):
@@ -95,8 +116,7 @@ func _exit_state(old_state):
 		'stink':
 			stop_chance = 0.0
 			movement.unlock()
-		'turn':
-			movement.unlock()
+
 
 
 func _on_PlayerDetection_body_entered(body):
@@ -112,8 +132,6 @@ func _spawn_cloud():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "StinkCloud":
-		set_state('move')
-	if anim_name == 'Turn':
 		set_state('move')
 
 
