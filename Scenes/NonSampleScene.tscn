@@ -14,4 +14,4 @@ tile_data = PoolIntArray( -65539, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 
 position = Vector2( 803.092, 22.6585 )
 
 [node name="Sock" parent="." index="4" instance=ExtResource( 2 )]
-position = Vector2( 1233.3, 79.3918 )
+position = Vector2( 1224.39, -12.6677 )
