@@ -85,8 +85,8 @@ func _move_to_target(keep_dir: bool):
 	animator.play("Walk")
 	$Timer.start(walk_time)
 
-var stop_chance := 0.0
-export var stop_chance_increase := 0.00
+var stop_chance := 0.1
+export var stop_chance_increase := 0.05
 func _on_Timer_timeout():
 	stop_chance += stop_chance_increase
 	set_state('pause')
@@ -112,6 +112,8 @@ func _enter_state(new_state):
 			walk_dir.x = -1.0
 			movement.lock()
 			animator.play("StinkCloud")
+			for part in body_parts:
+				part.inflate()
 			
 
 func _state_process(delta):

@@ -33,3 +33,6 @@ func _process(delta):
 #		scale.x *= -1.0
 		
 	position.y = target.position.y + y_amplitude * sin(y_period * OS.get_ticks_msec() + y_offset) + height_offset
+
+func inflate():
+	$AnimationPlayer.play("Inflate")
